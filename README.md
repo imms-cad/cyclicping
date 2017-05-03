@@ -7,7 +7,7 @@ Currently supported protocols (interfaces) are:
 - UDP
 - TCP
 - Uart
-- [Netmap](https://github.com/luigirizzo/netmap)
+- [Netmap](https://github.com/luigirizzo/netmap) (experimental)
 
 ## Building
 
@@ -129,4 +129,8 @@ Adding `-g, --gnuplot` makes cyclicping print out additional Gnuplot script code
 
 	Server: `./cyclicping -s -u udp -p 80 -a 1`
 
-	Client: `./cyclicping -c -u udp -p 80 -a 1 -i 1000 -l 10000 -H 2000 -g -q | gnuplot -p`
+	Client: `./cyclicping -c -u udp:<serverip> -p 80 -a 1 -i 1000 -l 10000 -H 500 -g -q | gnuplot -p`
+
+	This will for example produce the following plot:
+
+	![Cyclicping histogram plot using Gnuplot](example-plot.png?raw=true)

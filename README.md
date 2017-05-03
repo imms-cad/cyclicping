@@ -1,4 +1,4 @@
-# CyclicpingG
+# Cyclicping
 
 Tool for measuring communication latency (round trip time) between two (RTPreempt) Linux systems.
 

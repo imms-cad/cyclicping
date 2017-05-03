@@ -1,4 +1,4 @@
-# Cyclicping
+# CyclicpingG
 
 Tool for measuring communication latency (round trip time) between two (RTPreempt) Linux systems.
 
@@ -134,3 +134,9 @@ Adding `-g, --gnuplot` makes cyclicping print out additional Gnuplot script code
 	This will for example produce the following plot:
 
 	![Cyclicping histogram plot using Gnuplot](example-plot.png?raw=true)
+
+## Acknowledgments
+
+This work has been funded by the [fast realtime](https://de.fast-zwanzig20.de/basisvorhaben/fast-realtime/) project.
+
+[![BMBF](https://de.fast-zwanzig20.de/wp-content/uploads/2016/02/BMBF_bunt.png)](https://www.bmbf.de/en/index.html) [![Zwanzig20](https://de.fast-zwanzig20.de/wp-content/uploads/2016/02/zwanzig20-1.png)](https://www.unternehmen-region.de/de/7661.php)

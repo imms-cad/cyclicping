@@ -32,6 +32,7 @@ struct cyclicping_module {
 	int (*init)(struct cyclicping_cfg *cfg, char **argv, int argc);
 	int (*run_client)(struct cyclicping_cfg *cfg);
 	int (*run_server)(struct cyclicping_cfg *cfg);
+	void (*deinit)(struct cyclicping_cfg *cfg);
 	void (*usage)(void);
 	void *modcfg;
 };

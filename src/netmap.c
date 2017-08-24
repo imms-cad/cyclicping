@@ -477,6 +477,18 @@ int netmap_server(struct cyclicping_cfg *cfg)
 }
 
 /**
+ * Clean up Netmap module ressources.
+ *
+ * \param cfg Cyclicping config data.
+ */
+void netmap_deinit(struct cyclicping_cfg *cfg)
+{
+	struct netmap_cfg *ucfg=cfg->current_mod->modcfg;
+
+	free(ucfg);
+}
+
+/**
  * Ouput Netmap interface module usage.
  */
 void netmap_usage(void)

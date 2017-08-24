@@ -32,6 +32,7 @@ struct tcp_cfg {
 int tcp_init(struct cyclicping_cfg *cfg, char **argv, int argc);
 int tcp_client(struct cyclicping_cfg *cfg);
 int tcp_server(struct cyclicping_cfg *cfg);
+void tcp_deinit(struct cyclicping_cfg *cfg);
 void tcp_usage(void);
 
 #endif

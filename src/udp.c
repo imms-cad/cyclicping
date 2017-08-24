@@ -212,6 +212,18 @@ int udp_server(struct cyclicping_cfg *cfg)
 }
 
 /**
+ * Clean up UDP module ressource.
+ *
+ * \param cfg Cyclicping config data.
+ */
+void udp_deinit(struct cyclicping_cfg *cfg)
+{
+	struct udp_cfg *ucfg=cfg->current_mod->modcfg;
+
+	free(ucfg);
+}
+
+/**
  * Ouput UDP interface module usage.
  */
 void udp_usage(void)

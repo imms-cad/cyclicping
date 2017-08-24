@@ -30,6 +30,7 @@ struct uart_cfg {
 int uart_init(struct cyclicping_cfg *cfg, char **argv, int argc);
 int uart_client(struct cyclicping_cfg *cfg);
 int uart_server(struct cyclicping_cfg *cfg);
+void uart_deinit(struct cyclicping_cfg *cfg);
 void uart_usage(void);
 
 #endif

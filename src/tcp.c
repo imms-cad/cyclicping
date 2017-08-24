@@ -248,6 +248,18 @@ int tcp_server(struct cyclicping_cfg *cfg)
 }
 
 /**
+ * Clean up TCP module ressources.
+ *
+ * \param cfg Cyclicping config data.
+ */
+void tcp_deinit(struct cyclicping_cfg *cfg)
+{
+	struct tcp_cfg *tcfg=cfg->current_mod->modcfg;
+
+	free(tcfg);
+}
+
+/**
  * Ouput TCP interface module usage.
  */
 void tcp_usage(void)

@@ -30,6 +30,7 @@ struct udp_cfg {
 int udp_init(struct cyclicping_cfg *cfg, char **argv, int argc);
 int udp_client(struct cyclicping_cfg *cfg);
 int udp_server(struct cyclicping_cfg *cfg);
+void udp_deinit(struct cyclicping_cfg *cfg);
 void udp_usage(void);
 
 #endif

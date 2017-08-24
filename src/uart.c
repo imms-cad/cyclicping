@@ -287,7 +287,19 @@ int uart_server(struct cyclicping_cfg *cfg)
 }
 
 /**
- * Ouput UDP interface module usage.
+ * Clean up UART module ressources.
+ *
+ * \param cfg Cyclicping config data.
+ */
+void uart_deinit(struct cyclicping_cfg *cfg)
+{
+	struct uart_cfg *ucfg=cfg->current_mod->modcfg;
+
+	free(ucfg);
+}
+
+/**
+ * Ouput UART interface module usage.
  */
 void uart_usage(void)
 {

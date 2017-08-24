@@ -47,11 +47,15 @@ int run=1;
 int abort_fd=0, latency_target_fd;
 
 static struct cyclicping_module modules[] = {
-	{ "udp", udp_init, udp_client, udp_server, udp_usage },
-	{ "tcp", tcp_init, tcp_client, tcp_server, tcp_usage },
-	{ "uart", uart_init, uart_client, uart_server, uart_usage },
+	{ "udp", udp_init, udp_client, udp_server, udp_deinit,
+		udp_usage },
+	{ "tcp", tcp_init, tcp_client, tcp_server, tcp_deinit,
+		tcp_usage },
+	{ "uart", uart_init, uart_client, uart_server, uart_deinit,
+		uart_usage },
 #ifdef HAVE_NETMAP
-	{ "netmap", netmap_init, netmap_client, netmap_server, netmap_usage },
+	{ "netmap", netmap_init, netmap_client, netmap_server, netmap_deinit,
+		netmap_usage },
 #endif
 	{ NULL },
 };
@@ -158,6 +162,9 @@ int run_cyclicping(struct cyclicping_cfg *cfg)
 
 	if(abort_fd)
 		close(abort_fd);
+
+	if(cfg->current_mod->deinit)
+		cfg->current_mod->deinit(cfg);
 
 	return ret;
 }

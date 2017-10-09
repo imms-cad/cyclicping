@@ -86,7 +86,7 @@ int tcp_init(struct cyclicping_cfg *cfg, char **argv, int argc)
 		return 1;
 	}
 
-	if(set_socket_priority(tcfg->socket)) {
+	if(set_socket_priority(tcfg->socket, cfg->opts.sopriority)) {
 		return 1;
 	}
 

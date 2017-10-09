@@ -21,6 +21,6 @@
 #define __SOCKET_H__
 
 int set_socket_tos(int sockfd);
-int set_socket_priority(int sockfd);
+int set_socket_priority(int sockfd, int soprio);
 
 #endif

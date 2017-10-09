@@ -59,6 +59,7 @@ void help(struct cyclicping_cfg *cfg)
 	printf("-M      --ms            Use ms as output time unit "
 		"(default: us).\n");
 	printf("-p <p>  --prio <p>      Process priority.\n");
+	printf("-P <p>  --so-prio <p>   Socket priority.\n");
 	printf("-q      --quiet         Don't print current statistic.\n");
 	printf("-s      --server        Run in server mode.\n");
 	printf("-u mod  --use mod       Use input/output interface <mod>.\n");
@@ -148,6 +149,11 @@ int sanitize_cfg(struct cyclicping_cfg *cfg)
 		exit(1);
 	}
 
+	if(opts->sopriority<0 || opts->sopriority>255) {
+		fprintf(stderr, "invalid socket priority\n");
+		exit(1);
+	}
+
 	if(opts->opt_affinity && opts->affinity<0) {
 		fprintf(stderr, "invalid affinity\n");
 		exit(1);
@@ -204,7 +210,7 @@ int parse_cfg(int argc, char *argv[], struct cyclicping_cfg *cfg)
 {
 	struct cyclicping_opts *opts=&cfg->opts;
 	int next_option;
-	const char* const short_options = "2a:b:cC:d:fghH:i:l:L:mMp:qsu:vV";
+	const char* const short_options = "2a:b:cC:d:fghH:i:l:L:mMp:P:qsu:vV";
 	const struct option long_options[] = {
 		{ "two-way", 0, NULL, '2' },
 		{ "affinity", 1, NULL, 'a' },
@@ -222,6 +228,7 @@ int parse_cfg(int argc, char *argv[], struct cyclicping_cfg *cfg)
 		{ "mlockall", 0, NULL, 'm' },
 		{ "ms", 0, NULL, 'M' },
 		{ "prio", 1, NULL, 'p' },
+		{ "so-prio", 1, NULL, 'P' },
 		{ "quiet", 0, NULL, 'q' },
 		{ "server", 0, NULL, 's' },
 		{ "use", 0, NULL, 'u' },
@@ -296,6 +303,10 @@ int parse_cfg(int argc, char *argv[], struct cyclicping_cfg *cfg)
 			case 'p' :
 				opts->opt_priority=optarg;
 				opts->priority=atoi(opts->opt_priority);
+				break;
+			case 'P' :
+				opts->opt_sopriority=optarg;
+				opts->sopriority=atoi(opts->opt_sopriority);
 				break;
 			case 'q' :
 				opts->quiet=1;

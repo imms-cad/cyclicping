@@ -45,10 +45,13 @@ int set_socket_tos(int sockfd)
 	return 0;
 }
 
-int set_socket_priority(int sockfd)
+int set_socket_priority(int sockfd, int soprio)
 {
-	int soprio=255, sopriocheck=0;
+	int sopriocheck=0;
 	socklen_t sopriolen;
+
+	if(soprio==0)
+		return 0;
 
 	/* set socket priority */
 	if(setsockopt(sockfd, SOL_SOCKET, SO_PRIORITY, &soprio,

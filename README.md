@@ -75,6 +75,9 @@ Crosscompiling can be done by settings CC to your cross compiler:
 * `-p <priority>, --prio <priority>`
 
 	Process priority cyclicping will use.
+* `-P <priority>, --so-prio <priority>`
+
+	Network socket priority cyclicping will set for socket based modules.
 * `-q, --quit`
 
 	Be less verbose and don't output current statistics.

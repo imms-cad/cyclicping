@@ -90,6 +90,10 @@ int tcp_init(struct cyclicping_cfg *cfg, char **argv, int argc)
 		return 1;
 	}
 
+	if(set_socket_tos(tcfg->socket)) {
+		return 1;
+	}
+
 	abort_fd=tcfg->socket;
 
 	tcfg->dest_addr.sin_family = AF_INET;

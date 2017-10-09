@@ -91,6 +91,10 @@ int udp_init(struct cyclicping_cfg *cfg, char **argv, int argc)
 		return 1;
 	}
 
+	if(set_socket_tos(ucfg->socket)) {
+		return 1;
+	}
+
 	abort_fd=ucfg->socket;
 
 	ucfg->dest_addr.sin_family = AF_INET;

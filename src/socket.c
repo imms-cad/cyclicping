@@ -22,12 +22,11 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 
-int set_socket_priority(int sockfd)
+int set_socket_tos(int sockfd)
 {
 	/* class selector 7, network control */
 	int tos = 224, toscheck=0;
-	int soprio=255, sopriocheck=0;
-	socklen_t toslen, sopriolen;
+	socklen_t toslen;
 
 	/* set IP TOS field */
 	if(setsockopt(sockfd, IPPROTO_IP, IP_TOS, &tos, sizeof(tos))!=0) {
@@ -42,6 +41,14 @@ int set_socket_priority(int sockfd)
 		fprintf(stderr, "TOS %d != %d\n", toscheck, tos);
 		return 1;
 	}
+
+	return 0;
+}
+
+int set_socket_priority(int sockfd)
+{
+	int soprio=255, sopriocheck=0;
+	socklen_t sopriolen;
 
 	/* set socket priority */
 	if(setsockopt(sockfd, SOL_SOCKET, SO_PRIORITY, &soprio,

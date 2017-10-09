@@ -7,6 +7,7 @@ Currently supported protocols (interfaces) are:
 - UDP
 - TCP
 - Uart
+- TSN (experimental)
 - [Netmap](https://github.com/luigirizzo/netmap) (experimental)
 
 ## Building
@@ -84,7 +85,7 @@ Crosscompiling can be done by settings CC to your cross compiler:
 * `-s, --server`
 
 	Run in server mode.
-* `-t, --tos`
+* `-t <tos>, --tos <tos>`
 
 	Sets the [TOS](https://en.wikipedia.org/wiki/Type_of_service) or DSCP field in the IP header if using IP based modules. For example using `-t 160` will set the field to `0xa0` indicating class 5 traffic. Client and server are using individual values.
 * `-u <module:config>, --use <module:config>`
@@ -105,6 +106,7 @@ Module | Server | Client
 UDP | `udp[:port]` | `udp:serverip[:port]`
 TCP | `tcp[:port]` | `tcp:serverip[:port]`
 UART | `uart:device[:baud[:flow]]` | `uart:device[:baud[:flow]]`
+TSN* | `stsn:interface:clientmac` | `stsn:interface:servermac`
 Netmap* | `netmap:interface[:port]` | `netmap:interface:servermac:serverip[:port]`
 
 \* Server mac address has to be given using '-' as separator
@@ -130,6 +132,12 @@ Adding `-g, --gnuplot` makes cyclicping print out additional Gnuplot script code
 	Server: `./cyclicping -s -u uart:/dev/ttyUSB0:460800`
 
 	Client: `./cyclicping -c -u uart:/dev/ttyUSB0:460800 -i 1000 -l 100000 -H 2000 -q > hist.txt`
+
+* TSN live statistic. Here link layer packets with the Ethernet Protocol ID set to TSN (0x22F0) are used. Socket priority gets set to 3, process priority to 70 and cyclicping is pinned to CPU #0. Stream reservation, configuring for example a credit based shaper, making sure packets from cyclicping are using the correct send queues, etc. has do be done separately. A script (cbs-conf.sh) is provided to for example setup the newly proposed CBS. But this requires the [CBS patches](https://www.spinics.net/lists/netdev/msg460869.html) applied to the kernel and also a patched [iproute2](https://www.spinics.net/lists/netdev/msg459554.html).
+
+	Server: `./cyclicping -s -p 70 -P 3 -a 0 -u stsn:enp3s0:a0-36-9f-e0-2e-ee`
+
+	Client: `./cyclicping -c -p 70 -P 3 -a 0 -u stsn:enp4s0:a0-36-9f-e0-2d-d5 -i 1000`
 
 * Generate a histogram of UDP RTTs and plot it using Gnuplot. Run with realtime priority 80 on CPU 1.
 

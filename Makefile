@@ -1,7 +1,7 @@
 EXEC = cyclicping
 
-SRC = cyclicping.c socket.c tcp.c udp.c ftrace.c opts.c stats.c uart.c
-INC = cyclicping.h socket.h tcp.h udp.h ftrace.h opts.h stats.h uart.h
+SRC = cyclicping.c socket.c tcp.c udp.c ftrace.c opts.c stats.c uart.c stsn.c
+INC = cyclicping.h socket.h tcp.h udp.h ftrace.h opts.h stats.h uart.h stsn.h
 
 ifdef NETMAP
 SRC += netmap.c

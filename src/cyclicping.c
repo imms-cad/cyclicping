@@ -37,6 +37,7 @@
 #include <tcp.h>
 #include <udp.h>
 #include <uart.h>
+#include <stsn.h>
 #include <ftrace.h>
 
 #ifdef HAVE_NETMAP
@@ -53,6 +54,8 @@ static struct cyclicping_module modules[] = {
 		tcp_usage },
 	{ "uart", uart_init, uart_client, uart_server, uart_deinit,
 		uart_usage },
+	{ "stsn", stsn_init, stsn_client, stsn_server, stsn_deinit,
+		stsn_usage },
 #ifdef HAVE_NETMAP
 	{ "netmap", netmap_init, netmap_client, netmap_server, netmap_deinit,
 		netmap_usage },

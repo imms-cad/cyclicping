@@ -59,7 +59,7 @@ Crosscompiling can be done by settings CC to your cross compiler:
 	Collect and print histogram data.
 * `-i <time>, --interval <time>`
 
-	Set the packet interval time. Default unit is us if not changed vi -M option.
+	Set the packet interval time. Default unit is us if not changed via -M option.
 * `-l <packets>, --loops <packets>`
 
 	Packet number cyclicping will send before aborting. Default is to run forever.
@@ -129,7 +129,7 @@ Adding `-g, --gnuplot` makes cyclicping print out additional Gnuplot script code
 
 	Server: `./cyclicping -s -u uart:/dev/ttyUSB0:460800`
 
-	Client: `./cyclicping -c -u uart:/dev/ttyUSB:460800 -i 1000 -l 100000 -H 2000 -q > hist.txt`
+	Client: `./cyclicping -c -u uart:/dev/ttyUSB0:460800 -i 1000 -l 100000 -H 2000 -q > hist.txt`
 
 * Generate a histogram of UDP RTTs and plot it using Gnuplot. Run with realtime priority 80 on CPU 1.
 

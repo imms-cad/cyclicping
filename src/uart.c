@@ -240,12 +240,15 @@ int uart_client(struct cyclicping_cfg *cfg)
 	}
 
 	/* add packet time to statistics */
-	add_stats(cfg, STAT_ALL, &tsend, &trecv);
+	if(add_stats(cfg, STAT_ALL, &tsend, &trecv))
+		return 1;
 
 	if(cfg->opts.two_way) {
 		buffer2tspec(cfg->recv_packet+2*sizeof(uint64_t), &tserver);
-		add_stats(cfg, STAT_SEND, &tsend, &tserver);
-		add_stats(cfg, STAT_RECV, &tserver, &trecv);
+		if(add_stats(cfg, STAT_SEND, &tsend, &tserver))
+			return 1;
+		if(add_stats(cfg, STAT_RECV, &tserver, &trecv))
+			return 1;
 	}
 
 	print_stats(cfg, &tsend, &tserver, &trecv);

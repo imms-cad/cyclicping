@@ -48,7 +48,7 @@ struct pdump {
 
 void buffer2tspec(const char *buffer, struct timespec *tspec);
 void tspec2buffer(const struct timespec *tspec, char *buffer);
-void add_stats(struct cyclicping_cfg *cfg, enum stat_type type,
+int add_stats(struct cyclicping_cfg *cfg, enum stat_type type,
 	const struct timespec *start, const struct timespec *end);
 void print_stats(struct cyclicping_cfg *cfg,
 	const struct timespec *send, const struct timespec *server,

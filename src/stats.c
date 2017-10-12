@@ -67,14 +67,32 @@ void tspec2buffer(const struct timespec *tspec, char *buffer)
  * \param type Type of statistic (send, recv, all).
  * \param start Start time.
  * \param end End time.
+ * \return 0 on success, else 1.
  */
-void add_stats(struct cyclicping_cfg *cfg, enum stat_type type,
+int add_stats(struct cyclicping_cfg *cfg, enum stat_type type,
 	const struct timespec *start, const struct timespec *end)
 {
-	uint64_t ndelta;
+	int64_t ndelta;
 
 	/* calculate delta in ns */
 	ndelta=TSPEC_TO_NSEC(end)-TSPEC_TO_NSEC(start);
+
+	/* sanity check delta value */
+	if(ndelta<=0 || ndelta>NSEC_PER_SEC) {
+		if(ndelta<=0)
+			fprintf(stderr, "packet receive time equal or before "
+				"transmit time\n");
+
+		if(ndelta>NSEC_PER_SEC)
+			fprintf(stderr, "packet round trip time to large\n");
+
+		if(type!=STAT_ALL) {
+			fprintf(stderr, "check time synchronization between "
+				"client and server\n");
+		}
+
+		return 1;
+	}
 
 	/* convert to us or ms as requested */
 	ndelta/=cfg->opts.ms?1000000:1000;
@@ -108,6 +126,8 @@ void add_stats(struct cyclicping_cfg *cfg, enum stat_type type,
 
 	cfg->stat[type].cnt++;
 	cfg->stat[type].avg+=(double)ndelta;
+
+	return 0;
 }
 
 /**

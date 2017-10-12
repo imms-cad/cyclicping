@@ -44,6 +44,7 @@ struct cyclicping_opts {
 	char ftrace;
 	int priority;
 	int sopriority;
+	int tos;
 	int histogram;
 	char ms;
 	char mlock;
@@ -60,6 +61,7 @@ struct cyclicping_opts {
 	char *opt_length;
 	char *opt_priority;
 	char *opt_sopriority;
+	char *opt_tos;
 	char *opt_histogram;
 	char *opt_clock;
 	char *opt_dumpfile;

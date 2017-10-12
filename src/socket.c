@@ -22,11 +22,13 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 
-int set_socket_tos(int sockfd)
+int set_socket_tos(int sockfd, int tos)
 {
-	/* class selector 7, network control */
-	int tos = 224, toscheck=0;
+	int toscheck=0;
 	socklen_t toslen;
+
+	if(tos==0)
+		return 0;
 
 	/* set IP TOS field */
 	if(setsockopt(sockfd, IPPROTO_IP, IP_TOS, &tos, sizeof(tos))!=0) {

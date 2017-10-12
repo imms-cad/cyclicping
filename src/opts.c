@@ -62,6 +62,7 @@ void help(struct cyclicping_cfg *cfg)
 	printf("-P <p>  --so-prio <p>   Socket priority.\n");
 	printf("-q      --quiet         Don't print current statistic.\n");
 	printf("-s      --server        Run in server mode.\n");
+	printf("-t <t>  --tos           Set TOS field in IP packets to <t>\n");
 	printf("-u mod  --use mod       Use input/output interface <mod>.\n");
 	printf("-v      --verbose       Verbose mode on.\n");
 	printf("-V      --version       Displays cyclicpings version "
@@ -154,6 +155,11 @@ int sanitize_cfg(struct cyclicping_cfg *cfg)
 		exit(1);
 	}
 
+	if(opts->tos<0 || opts->tos>255) {
+		fprintf(stderr, "invalid TOS field value\n");
+		exit(1);
+	}
+
 	if(opts->opt_affinity && opts->affinity<0) {
 		fprintf(stderr, "invalid affinity\n");
 		exit(1);
@@ -210,7 +216,7 @@ int parse_cfg(int argc, char *argv[], struct cyclicping_cfg *cfg)
 {
 	struct cyclicping_opts *opts=&cfg->opts;
 	int next_option;
-	const char* const short_options = "2a:b:cC:d:fghH:i:l:L:mMp:P:qsu:vV";
+	const char* const short_options = "2a:b:cC:d:fghH:i:l:L:mMp:P:qst:u:vV";
 	const struct option long_options[] = {
 		{ "two-way", 0, NULL, '2' },
 		{ "affinity", 1, NULL, 'a' },
@@ -229,6 +235,7 @@ int parse_cfg(int argc, char *argv[], struct cyclicping_cfg *cfg)
 		{ "ms", 0, NULL, 'M' },
 		{ "prio", 1, NULL, 'p' },
 		{ "so-prio", 1, NULL, 'P' },
+		{ "tos", 1, NULL, 'P' },
 		{ "quiet", 0, NULL, 'q' },
 		{ "server", 0, NULL, 's' },
 		{ "use", 0, NULL, 'u' },
@@ -313,6 +320,10 @@ int parse_cfg(int argc, char *argv[], struct cyclicping_cfg *cfg)
 				break;
 			case 's' :
 				opts->server=1;
+				break;
+			case 't' :
+				opts->opt_tos=optarg;
+				opts->tos=atoi(opts->opt_tos);
 				break;
 			case 'u' :
 				opts->opt_mod=optarg;

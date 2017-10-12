@@ -83,7 +83,10 @@ Crosscompiling can be done by settings CC to your cross compiler:
 	Be less verbose and don't output current statistics.
 * `-s, --server`
 
-	 Run in server mode.
+	Run in server mode.
+* `-t, --tos`
+
+	Sets the [TOS](https://en.wikipedia.org/wiki/Type_of_service) or DSCP field in the IP header if using IP based modules. For example using `-t 160` will set the field to `0xa0` indicating class 5 traffic. Client and server are using individual values.
 * `-u <module:config>, --use <module:config>`
 
 	Use interface module for measuring (see table below).

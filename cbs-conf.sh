@@ -22,8 +22,8 @@ fi
 NIC=$1
 # the CBS enabled tc from iproute2 package
 TC=`which tc`
-# an ip adress of your choice
-IP=192.168.10.1
+# enable or disable hardware offload for the cbs
+OFFLOAD=1
 
 ifconfig $NIC down
 
@@ -33,9 +33,9 @@ $TC qdisc replace dev $NIC handle 100: parent root mqprio num_tc 3 \
 	map 2 2 1 0 2 2 2 2 2 2 2 2 2 2 2 2 queues 1@0 1@1 2@2 hw 0
 
 $TC qdisc replace dev $NIC parent 100:4 cbs locredit -1470 hicredit 30 \
-	sendslope -980000 idleslope 20000
+	sendslope -980000 idleslope 20000 offload $OFFLOAD
 
 $TC qdisc replace dev $NIC parent 100:5 cbs locredit -1485 hicredit 31 \
-	sendslope -990000 idleslope 10000
+	sendslope -990000 idleslope 10000 offload $OFFLOAD
 
-ifconfig $NIC $IP up
+ifconfig $NIC 0.0.0.0 up

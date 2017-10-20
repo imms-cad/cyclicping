@@ -1,5 +1,8 @@
 /******************************************************************************
 * Copyright (C) 2016-2017 IMMS GmbH, Thomas Elste <thomas.elste@imms.de>
+*
+* Some parts derived from tsn-listener.c and tsn-talker.c examples
+* Copyright (c) 2017, Intel Corporation
 
 * This program is free software; you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
